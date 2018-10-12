@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem2DAL.Repositories
 {
-    class SellerRepository : GenericRepository<Entities.Seller>
+    public class SellerRepository : GenericRepository<Entities.Seller>
     {
 
         private PaymentSystemContext storeDBContext;

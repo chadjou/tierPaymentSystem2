@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem2DAL.Repositories
 {
-    class GenericRepository<TEntity> where TEntity : class
+    public  class GenericRepository<TEntity> where TEntity : class
     {
         // Instance of the DbContext. Must be passed or injected.        
         private DbContext Context { get; set; }

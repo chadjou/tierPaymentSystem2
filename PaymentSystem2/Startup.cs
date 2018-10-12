@@ -12,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
+using PaymentSystem2DAL.Repositories;
 
 namespace PaymentSystem2
 {
@@ -41,6 +43,10 @@ namespace PaymentSystem2
 
             services.AddDbContext<PaymentSystemContext>(options =>
                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("PaymentSystem2")));
+
+            services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<SellerRepository, SellerRepository>();
+            services.AddScoped<SellerBS, SellerBS>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
