@@ -26,17 +26,18 @@ namespace PaymentSystem2BLL.Services
         {
             return await this._sellerRepository.GetContactById(id);
         }
-        /*
+
         public async Task<int> AddContact(PaymentSystem2DAL.Entities.Seller inputEt)
         {
             return await this._sellerRepository.AddContact(inputEt);
-        }
 
+            /*
         public async Task UpdateContact(PaymentSystem2DAL.Entities.Seller inputEt)
         {
             await this._sellerRepository.UpdateContact(inputEt);
         }
         */
+        }
 
         public async Task DeleteContact(int id)
         {

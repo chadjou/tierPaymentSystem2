@@ -25,17 +25,14 @@ namespace PaymentSystem2DAL.Repositories
         {
             return await this.GetByIdAsync(id);
         }
-        /*
+        
         public async Task<int> AddContact(Entities.Seller inputEt)
         {
-            inputEt.ContactId = 0;
-            inputEt.AuditTime = DateTime.Now;
             await this.InsertAsync(inputEt, true);
-            //this.Commit();
-            return inputEt.ContactId;
+            return inputEt.SellerId;
         }
         
-
+        /*
         public async Task UpdateContact(Entities.Seller inputEt)
         {
             //Get entity to be updated

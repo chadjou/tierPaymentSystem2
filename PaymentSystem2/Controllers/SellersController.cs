@@ -33,6 +33,24 @@ namespace PaymentSystem2.Controllers
             return rtnList;
         }
 
+        [HttpPost]
+        [Route("~/api/seller")]
+        public async Task<int> Post_AddProduct([FromBody] Seller Seller)
+        {
+
+            var qq = await bs.AddContact(Seller);
+
+            return qq;
+
+            ////Generate a link to the new product and set the Location header in the response.
+            ////For public HttpResponseMessage Post_AddProduct([FromBody] Models.Product mProduct)
+            //var response = new HttpResponseMessage(HttpStatusCode.Created);
+            //string uri = Url.Link("GetProductById", new { id = eProduct.ProductId });
+            //response.Headers.Location = new Uri(uri);
+            //return response;
+        }
+
+
         // GET: api/Sellers/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSeller([FromRoute] int id)
