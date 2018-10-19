@@ -145,5 +145,19 @@ namespace PaymentSystem2.Controllers
         {
             return _context.Sellers.Any(e => e.SellerId == id);
         }
+
+        [Route("~/api/deleteseller2")]
+        public async Task DeleteSeller2([FromBody] [FromBody] Seller seller)
+        {
+
+            await bs.DeleteSeller2(id);
+        }
+
+        [Route("~/api/updateseller2")]
+        public async Task UpdateSeller([FromBody] Models.Product mProduct)
+        {
+            var eProduct = mapModelToEntity.ConvertObject(mProduct);
+            await bs.UpdateProduct(eProduct);
+        }
     }
 }

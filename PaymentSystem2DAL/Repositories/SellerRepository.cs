@@ -21,7 +21,7 @@ namespace PaymentSystem2DAL.Repositories
             return await this.GetAllAsync();
         }
 
-        public async Task<Entities.Seller> GetContactById(int id)
+        public async Task<Entities.Seller> GetSellerById(int id)
         {
             return await this.GetByIdAsync(id);
         }
@@ -32,24 +32,21 @@ namespace PaymentSystem2DAL.Repositories
             return inputEt.SellerId;
         }
         
-        /*
-        public async Task UpdateContact(Entities.Seller inputEt)
+        
+        public async Task UpdateSeller(Entities.Seller inputEt)
         {
             //Get entity to be updated
-            Entities.Seller updEt = GetContactById(inputEt.ContactId).Result;
+            Entities.Seller updEt = GetSellerById(inputEt.SellerId).Result;
 
-            if (!string.IsNullOrEmpty(inputEt.ContactName)) updEt.ContactName = inputEt.ContactName;
-            if (!string.IsNullOrEmpty(inputEt.Phone)) updEt.Phone = inputEt.Phone;
-            if (!string.IsNullOrEmpty(inputEt.Email)) updEt.Email = inputEt.Email;
-            if (inputEt.PrimaryType != 0) updEt.PrimaryType = inputEt.PrimaryType;
-            updEt.AuditTime = DateTime.Now;
+            updEt = inputEt;
+
 
             await this.UpdateAsync(updEt, true);
             //this.Commit();
         }
-        */
+        
 
-        public async Task DeleteContact(int id)
+        public async Task DeleteSeller2(int id)
         {
             await this.DeleteAsync(id, true);
             //this.Commit();

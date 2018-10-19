@@ -39,9 +39,9 @@ namespace PaymentSystem2BLL.Services
         */
         }
 
-        public async Task DeleteContact(int id)
+        public async Task DeleteSeller2(int id)
         {
-            await this._sellerRepository.DeleteContact(id);
+            await this._sellerRepository.DeleteSeller2(id);
         }
     }
 }
