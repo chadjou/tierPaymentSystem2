@@ -147,17 +147,17 @@ namespace PaymentSystem2.Controllers
         }
 
         [Route("~/api/deleteseller2")]
-        public async Task DeleteSeller2([FromBody] [FromBody] Seller seller)
+        public async Task DeleteSeller2([FromBody] int id)
         {
 
             await bs.DeleteSeller2(id);
         }
 
         [Route("~/api/updateseller2")]
-        public async Task UpdateSeller([FromBody] Models.Product mProduct)
+        public async Task UpdateSeller([FromBody] Seller seller)
         {
-            var eProduct = mapModelToEntity.ConvertObject(mProduct);
-            await bs.UpdateProduct(eProduct);
+            
+            await bs.UpdateSeller(seller);
         }
     }
 }
