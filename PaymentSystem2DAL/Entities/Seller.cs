@@ -6,7 +6,7 @@ namespace PaymentSystem2DAL.Entities
 {
     public class Seller
     {
-        public int SellerId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
         public string Address { get; set; }

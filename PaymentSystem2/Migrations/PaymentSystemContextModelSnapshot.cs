@@ -20,7 +20,7 @@ namespace PaymentSystem2.Migrations
 
             modelBuilder.Entity("PaymentSystem2DAL.Entities.Seller", b =>
                 {
-                    b.Property<int>("SellerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,14 +28,14 @@ namespace PaymentSystem2.Migrations
 
                     b.Property<string>("Name");
 
-                    b.HasKey("SellerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("PaymentSystem2DAL.Entities.Terminal", b =>
                 {
-                    b.Property<int>("TerminalId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -45,7 +45,7 @@ namespace PaymentSystem2.Migrations
 
                     b.Property<int>("SellerId");
 
-                    b.HasKey("TerminalId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SellerId");
 

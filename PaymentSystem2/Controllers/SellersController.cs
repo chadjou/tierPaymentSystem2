@@ -79,7 +79,7 @@ namespace PaymentSystem2.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != seller.SellerId)
+            if (id != seller.Id)
             {
                 return BadRequest();
             }
@@ -117,7 +117,7 @@ namespace PaymentSystem2.Controllers
             _context.Sellers.Add(seller);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSeller", new { id = seller.SellerId }, seller);
+            return CreatedAtAction("GetSeller", new { id = seller.Id }, seller);
         }
 
         // DELETE: api/Sellers/5
@@ -143,7 +143,7 @@ namespace PaymentSystem2.Controllers
 
         private bool SellerExists(int id)
         {
-            return _context.Sellers.Any(e => e.SellerId == id);
+            return _context.Sellers.Any(e => e.Id == id);
         }
 
         [Route("~/api/deleteseller2")]

@@ -11,21 +11,21 @@ namespace PaymentSystem2.Migrations
                 name: "Sellers",
                 columns: table => new
                 {
-                    SellerId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sellers", x => x.SellerId);
+                    table.PrimaryKey("PK_Sellers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Terminals",
                 columns: table => new
                 {
-                    TerminalId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
@@ -33,12 +33,12 @@ namespace PaymentSystem2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Terminals", x => x.TerminalId);
+                    table.PrimaryKey("PK_Terminals", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Terminals_Sellers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "Sellers",
-                        principalColumn: "SellerId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
