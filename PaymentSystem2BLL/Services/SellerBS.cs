@@ -19,7 +19,8 @@ namespace PaymentSystem2BLL.Services
 
         public async Task<IList<PaymentSystem2DAL.Entities.Seller>> GetContacts()
         {
-            return await this._sellerRepository.GetContacts();
+            //return await this._sellerRepository.GetContacts();
+            return await this._sellerRepository.GetContactsWithIncludes();
         }
 
         public async Task<PaymentSystem2DAL.Entities.Seller> GetContactById(int id)

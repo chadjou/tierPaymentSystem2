@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
 using PaymentSystem2DAL.Entities;
@@ -26,11 +27,23 @@ namespace PaymentSystem2.Controllers
 
         // GET: api/Sellers
         [HttpGet]
-        public async Task<IEnumerable<Seller>> GetSellersAsync()
+        public async Task<string> GetSellersAsync()
         {
+            //  var rtnList = await bs.GetContacts();
             var rtnList = await bs.GetContacts();
+            /*
+            foreach (var retn in rtnList)
+            { retn.Terminals = new List<Terminal>(); }
+            */
+
             // return _context.Sellers;
-            return rtnList;
+
+            var serializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+
+            string json = JsonConvert.SerializeObject(rtnList, Formatting.Indented, serializerSettings);
+            //var qqq = JsonConvert.ToString(rtnList);
+           
+            return json;
         }
 
         [HttpPost]

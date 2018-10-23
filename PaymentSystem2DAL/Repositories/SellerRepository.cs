@@ -18,9 +18,21 @@ namespace PaymentSystem2DAL.Repositories
 
         public async Task<IList<Entities.Seller>> GetContacts()
         {
+
+            var qq = await this.GetAllAsync();
+
             return await this.GetAllAsync();
         }
 
+        public  Task<IList<Entities.Seller>> GetContactsWithIncludes()
+        {
+
+            //var qq =  this.GetAllWithIncludes("Terminals");
+
+            return  this.GetAllWithIncludes("Terminals");
+        }
+
+     
         public async Task<Entities.Seller> GetSellerById(int id)
         {
             return await this.GetByIdAsync(id);

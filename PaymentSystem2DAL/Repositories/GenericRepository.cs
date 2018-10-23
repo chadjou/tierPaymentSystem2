@@ -146,6 +146,12 @@ namespace PaymentSystem2DAL.Repositories
             return await this.DbSet.ToListAsync();
         }
 
+        public virtual async Task<IList<TEntity>> GetAllWithIncludes( string include)
+        {
+            var qq  = this.DbSet.Include(include).ToListAsync();
+            return await qq;
+        }
+
         public virtual async Task<IList<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> match)
         {
             return await this.DbSet.Where(match).ToListAsync();
