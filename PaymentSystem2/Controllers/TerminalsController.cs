@@ -71,6 +71,7 @@ namespace PaymentSystem2.Controllers
 
         // PUT: api/Terminals/5
         [HttpPut("{id}")]
+        [Route("~/api/terminal")]
         public async Task<IActionResult> PutTerminal([FromRoute] int id, [FromBody] Terminal terminal)
         {
             if (!ModelState.IsValid)
