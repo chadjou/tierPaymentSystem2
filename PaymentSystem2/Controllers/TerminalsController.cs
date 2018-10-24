@@ -121,8 +121,9 @@ namespace PaymentSystem2.Controllers
         }
 
         // DELETE: api/Terminals/5
+        [Route("~/api/deleteterminal")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTerminal([FromRoute] int id)
+        public async Task<IActionResult> DeleteTerminal([FromBody] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -146,7 +147,7 @@ namespace PaymentSystem2.Controllers
             return _context.Terminals.Any(e => e.Id == id);
         }
 
-        [Route("~/api/deleteterminal2")]
+        [Route("~/api/terminal2")]
         public async Task DeleteTerminal2([FromBody] int id)
         {
 

@@ -46,7 +46,9 @@ namespace PaymentSystem2
 
             services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<SellerRepository, SellerRepository>();
+            services.AddScoped<TerminalRepository, TerminalRepository>();
             services.AddScoped<SellerBS, SellerBS>();
+            services.AddScoped<TerminalBS, TerminalBS>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
