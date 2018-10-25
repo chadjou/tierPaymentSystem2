@@ -53,7 +53,7 @@ namespace PaymentSystem2DAL.Repositories
             updEt = inputEt;
 
 
-            await this.UpdateAsync(updEt, true);
+            await this.UpdateAsync(updEt, updEt.Id, true);
             //this.Commit();
         }
         
