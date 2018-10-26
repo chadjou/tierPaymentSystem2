@@ -27,6 +27,7 @@ namespace PaymentSystem2.Controllers
 
         // GET: api/Sellers
         [HttpGet]
+        [Route("~/api/seller")]
         public async Task<string> GetSellersAsync()
         {
             //  var rtnList = await bs.GetContacts();
@@ -82,7 +83,7 @@ namespace PaymentSystem2.Controllers
 
             return Ok(seller);
         }
-
+        /*
         // PUT: api/Sellers/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSeller([FromRoute] int id, [FromBody] Seller seller)
@@ -117,6 +118,7 @@ namespace PaymentSystem2.Controllers
 
             return NoContent();
         }
+        */
 
         // POST: api/Sellers
         [HttpPost]
@@ -133,6 +135,7 @@ namespace PaymentSystem2.Controllers
             return CreatedAtAction("GetSeller", new { id = seller.Id }, seller);
         }
 
+        /*
         // DELETE: api/Sellers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSeller([FromRoute] int id)
@@ -153,20 +156,23 @@ namespace PaymentSystem2.Controllers
 
             return Ok(seller);
         }
+        */
 
         private bool SellerExists(int id)
         {
             return _context.Sellers.Any(e => e.Id == id);
         }
 
-        [Route("~/api/deleteseller2")]
+        [Route("~/api/seller")]
+        [HttpDelete]
         public async Task DeleteSeller2([FromBody] int id)
         {
 
             await bs.DeleteSeller2(id);
         }
 
-        [Route("~/api/updateseller2")]
+        [Route("~/api/seller")]
+        [HttpPut]
         public async Task UpdateSeller([FromBody] Seller seller)
         {
             

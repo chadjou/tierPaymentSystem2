@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
 using PaymentSystem2DAL.Entities;
+using System.Net.Http;
 
 namespace PaymentSystem2.Controllers
 {
@@ -107,6 +108,7 @@ namespace PaymentSystem2.Controllers
 
         // POST: api/Terminal
         [HttpPost]
+        [Route("~/api/seller2")]
         public async Task<IActionResult> PostTerminal([FromBody] Terminal terminal)
         {
             if (!ModelState.IsValid)
@@ -121,8 +123,8 @@ namespace PaymentSystem2.Controllers
         }
 
         // DELETE: api/Terminals/5
-        [Route("~/api/deleteterminal")]
-        [HttpDelete("{id}")]
+        [Route("~/api/terminal")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteTerminal([FromBody] int id)
         {
             if (!ModelState.IsValid)
@@ -146,19 +148,43 @@ namespace PaymentSystem2.Controllers
         {
             return _context.Terminals.Any(e => e.Id == id);
         }
-
+        /*
         [Route("~/api/terminal2")]
         public async Task DeleteTerminal2([FromBody] int id)
         {
 
             await bs.DeleteTerminal2(id);
         }
-
-        [Route("~/api/updateterminal2")]
+        */
+        /// <summary>
+        /// /////////////////////////
+        /// </summary>
+        /// <param name="terminal"></param>
+        /// <returns></returns>
+        [Route("~/api/terminal")]
+        [HttpPut]
         public async Task UpdateTerminal([FromBody] Terminal terminal)
         {
 
             await bs.UpdateTerminal(terminal);
+        }
+
+        /// <summary>
+        /// ///////////////////////
+        /// </summary>
+        /// <param name="terminal"></param>
+        /// <returns></returns>
+
+        [Route("~/api/testseller")]
+        [HttpPut]
+        //  public async Task testSeller(HttpRequestMessage terminal)
+        public string testSeller(HttpRequestMessage terminal)
+        //public async Task testSeller([FromBody] Terminal terminal)
+        {
+            var qq = terminal.Content.ToString() ;
+
+            return qq;
+           // await bs.UpdateTerminal(terminal.Content);
         }
     }
 }
