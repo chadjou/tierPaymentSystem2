@@ -8,14 +8,14 @@ namespace PaymentSystem2DAL.Repositories
 {
     public class TerminalRepository : GenericRepository<Entities.Terminal>
     {
-        private PaymentSystemContext storeDBContext;
+        private PaymentSystemContext PaymentSystemContext;
         public TerminalRepository(PaymentSystemContext context)
             : base(context)
         {
-            storeDBContext = context;
+            PaymentSystemContext = context;
         }
 
-        public async Task<IList<Entities.Terminal>> GetContacts()
+        public async Task<IList<Entities.Terminal>> GetTerminals()
         {
             return await this.GetAllAsync();
         }
@@ -25,7 +25,7 @@ namespace PaymentSystem2DAL.Repositories
             return await this.GetByIdAsync(id);
         }
 
-        public async Task<int> AddContact(Entities.Terminal inputEt)
+        public async Task<int> AddTerminal(Entities.Terminal inputEt)
         {
             await this.InsertAsync(inputEt, true);
             return inputEt.Id;
@@ -34,7 +34,7 @@ namespace PaymentSystem2DAL.Repositories
 
         public async Task UpdateTerminal(Entities.Terminal inputEt)
         {
-            //Get entity to be updated
+            //checking for errors
             Entities.Terminal updEt = GetTerminalById(inputEt.Id).Result;
 
             updEt = inputEt;

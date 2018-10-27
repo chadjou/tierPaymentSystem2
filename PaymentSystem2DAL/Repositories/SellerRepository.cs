@@ -1,66 +1,61 @@
-﻿using PaymentSystem2DAL.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PaymentSystem2DAL.DataContext;
+using PaymentSystem2DAL.Entities;
 
 namespace PaymentSystem2DAL.Repositories
 {
-    public class SellerRepository : GenericRepository<Entities.Seller>
+    public class SellerRepository : GenericRepository<Seller>
     {
+        private PaymentSystemContext paymentaymentSystemContext;
 
-        private PaymentSystemContext storeDBContext;
         public SellerRepository(PaymentSystemContext context)
             : base(context)
         {
-            storeDBContext = context;
+            paymentaymentSystemContext = context;
         }
 
-        public async Task<IList<Entities.Seller>> GetContacts()
+        public async Task<IList<Seller>> GetContacts()
         {
-
-            var qq = await this.GetAllAsync();
-
-            return await this.GetAllAsync();
+            return await GetAllAsync();
         }
 
-        public  Task<IList<Entities.Seller>> GetContactsWithIncludes()
+        public Task<IList<Seller>> GetContactsWithIncludes()
         {
+           
 
-            //var qq =  this.GetAllWithIncludes("Terminals");
-
-            return  this.GetAllWithIncludes("Terminals");
+            return GetAllWithIncludes("Terminals");
         }
 
-     
-        public async Task<Entities.Seller> GetSellerById(int id)
+
+        public async Task<Seller> GetSellerById(int id)
         {
-            return await this.GetByIdAsync(id);
+            return await GetByIdAsync(id);
         }
-        
-        public async Task<int> AddContact(Entities.Seller inputEt)
+
+        public async Task<int> AddContact(Seller inputEt)
         {
-            await this.InsertAsync(inputEt, true);
+            await InsertAsync(inputEt, true);
             return inputEt.Id;
         }
-        
-        
-        public async Task UpdateSeller(Entities.Seller inputEt)
+
+
+        public async Task UpdateSeller(Seller inputEt)
         {
             //Get entity to be updated
-            Entities.Seller updEt = GetSellerById(inputEt.Id).Result;
+            var updEt = GetSellerById(inputEt.Id).Result;
 
             updEt = inputEt;
 
 
-            await this.UpdateAsync(updEt, updEt.Id, true);
+            await UpdateAsync(updEt, updEt.Id, true);
             //this.Commit();
         }
-        
+
 
         public async Task DeleteSeller2(int id)
         {
-            await this.DeleteAsync(id, true);
+            await DeleteAsync(id, true);
             //this.Commit();
         }
     }

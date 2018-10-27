@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
 using PaymentSystem2DAL.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PaymentSystem2.Controllers
 {
@@ -16,34 +12,26 @@ namespace PaymentSystem2.Controllers
     [ApiController]
     public class SellersController : ControllerBase
     {
-        private SellerBS bs;
         private readonly PaymentSystemContext _context;
+        private readonly SellerBS bs;
 
-        public SellersController(PaymentSystemContext context, SellerBS SellerBS)
+        public SellersController(PaymentSystemContext context, SellerBS sellerBs)
         {
-            bs = SellerBS;
+            bs = sellerBs;
             _context = context;
         }
 
-        // GET: api/Sellers
         [HttpGet]
         [Route("~/api/seller")]
         public async Task<string> GetSellersAsync()
         {
-            //  var rtnList = await bs.GetContacts();
-            var rtnList = await bs.GetContacts();
-            /*
-            foreach (var retn in rtnList)
-            { retn.Terminals = new List<Terminal>(); }
-            */
+            var rtnList = await bs.GetSellers();
 
-            // return _context.Sellers;
+            var serializerSettings = new JsonSerializerSettings
+            { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
 
-            var serializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+            var json = JsonConvert.SerializeObject(rtnList, Formatting.Indented, serializerSettings);
 
-            string json = JsonConvert.SerializeObject(rtnList, Formatting.Indented, serializerSettings);
-            //var qqq = JsonConvert.ToString(rtnList);
-           
             return json;
         }
 
@@ -51,10 +39,7 @@ namespace PaymentSystem2.Controllers
         [Route("~/api/seller")]
         public async Task<int> Post_AddProduct([FromBody] Seller Seller)
         {
-
-            var qq = await bs.AddContact(Seller);
-
-            return qq;
+            return await bs.AddSeller(Seller);
 
             ////Generate a link to the new product and set the Location header in the response.
             ////For public HttpResponseMessage Post_AddProduct([FromBody] Models.Product mProduct)
@@ -64,100 +49,6 @@ namespace PaymentSystem2.Controllers
             //return response;
         }
 
-
-        // GET: api/Sellers/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSeller([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var seller = await _context.Sellers.FindAsync(id);
-
-            if (seller == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(seller);
-        }
-        /*
-        // PUT: api/Sellers/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSeller([FromRoute] int id, [FromBody] Seller seller)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != seller.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(seller).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SellerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        */
-
-        // POST: api/Sellers
-        [HttpPost]
-        public async Task<IActionResult> PostSeller([FromBody] Seller seller)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Sellers.Add(seller);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSeller", new { id = seller.Id }, seller);
-        }
-
-        /*
-        // DELETE: api/Sellers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSeller([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var seller = await _context.Sellers.FindAsync(id);
-            if (seller == null)
-            {
-                return NotFound();
-            }
-
-            _context.Sellers.Remove(seller);
-            await _context.SaveChangesAsync();
-
-            return Ok(seller);
-        }
-        */
-
         private bool SellerExists(int id)
         {
             return _context.Sellers.Any(e => e.Id == id);
@@ -165,17 +56,15 @@ namespace PaymentSystem2.Controllers
 
         [Route("~/api/seller")]
         [HttpDelete]
-        public async Task DeleteSeller2([FromBody] int id)
+        public async Task DeleteSeller([FromBody] int id)
         {
-
-            await bs.DeleteSeller2(id);
+            await bs.DeleteSeller(id);
         }
 
         [Route("~/api/seller")]
         [HttpPut]
         public async Task UpdateSeller([FromBody] Seller seller)
         {
-            
             await bs.UpdateSeller(seller);
         }
     }

@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
 using PaymentSystem2DAL.Entities;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PaymentSystem2.Controllers
 {
     public class TerminalsController : ControllerBase
     {
-
         private TerminalBS bs;
         private readonly PaymentSystemContext _context;
 
-        public TerminalsController(PaymentSystemContext context, TerminalBS TerminalBS)
+        public TerminalsController(PaymentSystemContext context, TerminalBS terminalBs)
         {
-            bs = TerminalBS;
+            bs = terminalBs;
             _context = context;
         }
 
@@ -29,18 +24,15 @@ namespace PaymentSystem2.Controllers
         [HttpGet]
         public async Task<IEnumerable<Terminal>> GetTerminalsAsync()
         {
-            var rtnList = await bs.GetContacts();
+            var rtnList = await bs.GetTerminals();
             return rtnList;
         }
 
         [HttpPost]
         [Route("~/api/terminal")]
-        public async Task<int> Post_AddProduct([FromBody] Terminal Terminal)
+        public async Task<int> Post_AddProduct([FromBody] Terminal terminal)
         {
-
-            var qq = await bs.AddContact(Terminal);
-
-            return qq;
+            return await bs.AddContact(terminal);
 
             ////Generate a link to the new product and set the Location header in the response.
             ////For public HttpResponseMessage Post_AddProduct([FromBody] Models.Product mProduct)
@@ -49,7 +41,6 @@ namespace PaymentSystem2.Controllers
             //response.Headers.Location = new Uri(uri);
             //return response;
         }
-
 
         // GET: api/Terminals/5
         [HttpGet("{id}")]
@@ -148,43 +139,12 @@ namespace PaymentSystem2.Controllers
         {
             return _context.Terminals.Any(e => e.Id == id);
         }
-        /*
-        [Route("~/api/terminal2")]
-        public async Task DeleteTerminal2([FromBody] int id)
-        {
 
-            await bs.DeleteTerminal2(id);
-        }
-        */
-        /// <summary>
-        /// /////////////////////////
-        /// </summary>
-        /// <param name="terminal"></param>
-        /// <returns></returns>
         [Route("~/api/terminal")]
         [HttpPut]
         public async Task UpdateTerminal([FromBody] Terminal terminal)
         {
-
             await bs.UpdateTerminal(terminal);
-        }
-
-        /// <summary>
-        /// ///////////////////////
-        /// </summary>
-        /// <param name="terminal"></param>
-        /// <returns></returns>
-
-        [Route("~/api/testseller")]
-        [HttpPut]
-        //  public async Task testSeller(HttpRequestMessage terminal)
-        public string testSeller(HttpRequestMessage terminal)
-        //public async Task testSeller([FromBody] Terminal terminal)
-        {
-            var qq = terminal.Content.ToString() ;
-
-            return qq;
-           // await bs.UpdateTerminal(terminal.Content);
         }
     }
 }

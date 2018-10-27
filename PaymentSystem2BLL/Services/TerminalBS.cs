@@ -17,9 +17,9 @@ namespace PaymentSystem2BLL.Services
                 this._terminalRepository = _terminalRepository;
         }
 
-        public async Task<IList<PaymentSystem2DAL.Entities.Terminal>> GetContacts()
+        public async Task<IList<PaymentSystem2DAL.Entities.Terminal>> GetTerminals()
         {
-            return await this._terminalRepository.GetContacts();
+            return await this._terminalRepository.GetTerminals();
         }
 
         public async Task<PaymentSystem2DAL.Entities.Terminal> GetContactById(int id)
@@ -29,7 +29,7 @@ namespace PaymentSystem2BLL.Services
 
         public async Task<int> AddContact(PaymentSystem2DAL.Entities.Terminal inputEt)
         {
-            return await this._terminalRepository.AddContact(inputEt);
+            return await this._terminalRepository.AddTerminal(inputEt);
         }
 
         public async Task UpdateTerminal(PaymentSystem2DAL.Entities.Terminal inputEt)

@@ -17,18 +17,17 @@ namespace PaymentSystem2BLL.Services
                 this._sellerRepository = _sellerRepository;
         }
 
-        public async Task<IList<PaymentSystem2DAL.Entities.Seller>> GetContacts()
+        public async Task<IList<PaymentSystem2DAL.Entities.Seller>> GetSellers()
         {
-            //return await this._sellerRepository.GetContacts();
             return await this._sellerRepository.GetContactsWithIncludes();
         }
 
-        public async Task<PaymentSystem2DAL.Entities.Seller> GetContactById(int id)
+        public async Task<PaymentSystem2DAL.Entities.Seller> GetSellerById(int id)
         {
             return await this._sellerRepository.GetSellerById(id);
         }
 
-        public async Task<int> AddContact(PaymentSystem2DAL.Entities.Seller inputEt)
+        public async Task<int> AddSeller(PaymentSystem2DAL.Entities.Seller inputEt)
         {
             return await this._sellerRepository.AddContact(inputEt);
         }
@@ -38,9 +37,7 @@ namespace PaymentSystem2BLL.Services
             await this._sellerRepository.UpdateSeller(inputEt);
         }
         
-        
-
-        public async Task DeleteSeller2(int id)
+        public async Task DeleteSeller(int id)
         {
             await this._sellerRepository.DeleteSeller2(id);
         }
