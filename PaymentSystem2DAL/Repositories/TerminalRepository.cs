@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem2DAL.Repositories
 {
-    public class TerminalRepository : GenericRepository<Entities.Terminal>
+    public class TerminalRepository : GenericRepository<Entities.Terminal>, ITerminalRepository
     {
         private PaymentSystemContext PaymentSystemContext;
         public TerminalRepository(PaymentSystemContext context)

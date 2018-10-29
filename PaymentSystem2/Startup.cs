@@ -44,11 +44,11 @@ namespace PaymentSystem2
             services.AddDbContext<PaymentSystemContext>(options =>
                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("PaymentSystem2")));
 
-            services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<SellerRepository, SellerRepository>();
-            services.AddScoped<TerminalRepository, TerminalRepository>();
-            services.AddScoped<SellerBS, SellerBS>();
-            services.AddScoped<TerminalBS, TerminalBS>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ISellerRepository, SellerRepository>();
+            services.AddScoped<ITerminalRepository, TerminalRepository>();
+            services.AddScoped<ISellerBS, SellerBS>();
+            services.AddScoped<ITerminalBS, TerminalBS>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

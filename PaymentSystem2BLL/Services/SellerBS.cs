@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem2BLL.Services
 {
-    public class SellerBS
+    public class SellerBS : ISellerBS
     {
         private SellerRepository _sellerRepository;
 

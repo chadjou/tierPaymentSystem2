@@ -5,7 +5,7 @@ using PaymentSystem2DAL.Entities;
 
 namespace PaymentSystem2DAL.Repositories
 {
-    public class SellerRepository : GenericRepository<Seller>
+    public class SellerRepository : GenericRepository<Seller>, ISellerRepository
     {
         private PaymentSystemContext paymentaymentSystemContext;
 

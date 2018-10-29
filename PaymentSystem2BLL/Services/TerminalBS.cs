@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaymentSystem2BLL.Services
 {
-     public class TerminalBS
+     public class TerminalBS : ITerminalBS
     {
         private TerminalRepository _terminalRepository;
 
