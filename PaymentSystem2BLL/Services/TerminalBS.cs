@@ -9,9 +9,9 @@ namespace PaymentSystem2BLL.Services
 {
      public class TerminalBS : ITerminalBS
     {
-        private TerminalRepository _terminalRepository;
+        private ITerminalRepository _terminalRepository;
 
-        public TerminalBS(TerminalRepository _terminalRepository)
+        public TerminalBS(ITerminalRepository _terminalRepository)
         {
             if (_terminalRepository != null)
                 this._terminalRepository = _terminalRepository;

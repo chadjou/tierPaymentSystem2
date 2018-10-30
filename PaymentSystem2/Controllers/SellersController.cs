@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PaymentSystem2.ViewModels;
 using PaymentSystem2BLL.Services;
 using PaymentSystem2DAL.DataContext;
 using PaymentSystem2DAL.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,11 +16,11 @@ namespace PaymentSystem2.Controllers
     public class SellersController : ControllerBase
     {
         private readonly PaymentSystemContext _context;
-        private readonly SellerBS bs;
+        private readonly ISellerBS _bs;
 
-        public SellersController(PaymentSystemContext context, SellerBS sellerBs)
+        public SellersController(PaymentSystemContext context, ISellerBS sellerBs)
         {
-            bs = sellerBs;
+            _bs = sellerBs;
             _context = context;
         }
 
@@ -25,28 +28,23 @@ namespace PaymentSystem2.Controllers
         [Route("~/api/seller")]
         public async Task<string> GetSellersAsync()
         {
-            var rtnList = await bs.GetSellers();
+            var sellerList = await _bs.GetSellers();
+
+            var sellerVmList = sellerList.Adapt<IEnumerable<SellerVm>>();
 
             var serializerSettings = new JsonSerializerSettings
             { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
 
-            var json = JsonConvert.SerializeObject(rtnList, Formatting.Indented, serializerSettings);
+            var json = JsonConvert.SerializeObject(sellerVmList, Formatting.Indented, serializerSettings);
 
             return json;
         }
 
         [HttpPost]
         [Route("~/api/seller")]
-        public async Task<int> Post_AddProduct([FromBody] Seller Seller)
+        public async Task<int> Post_AddProduct([FromBody] Seller sellerReq)
         {
-            return await bs.AddSeller(Seller);
-
-            ////Generate a link to the new product and set the Location header in the response.
-            ////For public HttpResponseMessage Post_AddProduct([FromBody] Models.Product mProduct)
-            //var response = new HttpResponseMessage(HttpStatusCode.Created);
-            //string uri = Url.Link("GetProductById", new { id = eProduct.ProductId });
-            //response.Headers.Location = new Uri(uri);
-            //return response;
+            return await _bs.AddSeller(sellerReq.Adapt<Seller>());
         }
 
         private bool SellerExists(int id)
@@ -58,14 +56,15 @@ namespace PaymentSystem2.Controllers
         [HttpDelete]
         public async Task DeleteSeller([FromBody] int id)
         {
-            await bs.DeleteSeller(id);
+            await _bs.DeleteSeller(id);
         }
 
         [Route("~/api/seller")]
         [HttpPut]
-        public async Task UpdateSeller([FromBody] Seller seller)
+        public async Task UpdateSeller([FromBody] SellerVm sellerReq)
         {
-            await bs.UpdateSeller(seller);
+            var seller = sellerReq.Adapt<Seller>();
+            await _bs.UpdateSeller(seller);
         }
     }
 }

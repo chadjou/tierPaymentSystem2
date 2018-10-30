@@ -9,9 +9,9 @@ namespace PaymentSystem2BLL.Services
 {
     public class SellerBS : ISellerBS
     {
-        private SellerRepository _sellerRepository;
+        private ISellerRepository _sellerRepository;
 
-        public SellerBS(SellerRepository _sellerRepository)
+        public SellerBS(ISellerRepository _sellerRepository)
         {
             if (_sellerRepository != null)
                 this._sellerRepository = _sellerRepository;

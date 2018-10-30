@@ -6,40 +6,38 @@ using PaymentSystem2DAL.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mapster;
+using PaymentSystem2.ViewModels;
 
 namespace PaymentSystem2.Controllers
 {
     public class TerminalsController : ControllerBase
     {
-        private TerminalBS bs;
+        private ITerminalBS _bs;
         private readonly PaymentSystemContext _context;
 
-        public TerminalsController(PaymentSystemContext context, TerminalBS terminalBs)
+        public TerminalsController(PaymentSystemContext context, ITerminalBS terminalBs)
         {
-            bs = terminalBs;
+            _bs = terminalBs;
             _context = context;
         }
 
         // GET: api/Terminals
         [HttpGet]
-        public async Task<IEnumerable<Terminal>> GetTerminalsAsync()
+        public async Task<IEnumerable<TerminalVm>> GetTerminalsAsync()
         {
-            var rtnList = await bs.GetTerminals();
-            return rtnList;
+
+            var terminalList = await _bs.GetTerminals();
+            var sellerVmList = terminalList.Adapt<IEnumerable<TerminalVm>>();
+            
+            return sellerVmList;
         }
 
         [HttpPost]
-        [Route("~/api/terminal")]
-        public async Task<int> Post_AddProduct([FromBody] Terminal terminal)
+        [Route("~/api/terminal2")]
+        public async Task<int> Post_AddProduct([FromBody] Terminal terminalVm)
         {
-            return await bs.AddContact(terminal);
-
-            ////Generate a link to the new product and set the Location header in the response.
-            ////For public HttpResponseMessage Post_AddProduct([FromBody] Models.Product mProduct)
-            //var response = new HttpResponseMessage(HttpStatusCode.Created);
-            //string uri = Url.Link("GetProductById", new { id = eProduct.ProductId });
-            //response.Headers.Location = new Uri(uri);
-            //return response;
+            return await _bs.AddContact(terminalVm.Adapt<Terminal>());
         }
 
         // GET: api/Terminals/5
@@ -64,19 +62,19 @@ namespace PaymentSystem2.Controllers
         // PUT: api/Terminals/5
         [HttpPut("{id}")]
         [Route("~/api/terminal")]
-        public async Task<IActionResult> PutTerminal([FromRoute] int id, [FromBody] Terminal terminal)
+        public async Task<IActionResult> PutTerminal([FromRoute] int id, [FromBody] TerminalVm terminalVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != terminal.Id)
+            if (id != terminalVm.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(terminal).State = EntityState.Modified;
+            _context.Entry(terminalVm).State = EntityState.Modified;
 
             try
             {
@@ -99,18 +97,18 @@ namespace PaymentSystem2.Controllers
 
         // POST: api/Terminal
         [HttpPost]
-        [Route("~/api/seller2")]
-        public async Task<IActionResult> PostTerminal([FromBody] Terminal terminal)
+        [Route("~/api/terminal")]
+        public async Task<IActionResult> PostTerminal([FromBody] TerminalVm terminalVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Terminals.Add(terminal);
+            _context.Terminals.Add(terminalVm.Adapt<Terminal>());
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTerminal", new { id = terminal.Id }, terminal);
+            return CreatedAtAction("GetTerminal", new { id = terminalVm.Id }, terminalVm);
         }
 
         // DELETE: api/Terminals/5
@@ -132,7 +130,7 @@ namespace PaymentSystem2.Controllers
             _context.Terminals.Remove(terminal);
             await _context.SaveChangesAsync();
 
-            return Ok(terminal);
+            return Ok(terminal.Adapt<TerminalVm>());
         }
 
         private bool TerminalExists(int id)
@@ -144,7 +142,7 @@ namespace PaymentSystem2.Controllers
         [HttpPut]
         public async Task UpdateTerminal([FromBody] Terminal terminal)
         {
-            await bs.UpdateTerminal(terminal);
+            await _bs.UpdateTerminal(terminal);
         }
     }
 }
